@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <script> 
+    window.addEventListener('load', async () => {
+        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text"];
+        var allElements = document.querySelectorAll('*[id]');
+        for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (!ignore.includes(el.id)) {
+            console.log(el.tagName)
+            if (el.id && el.tagName === "BUTTON") {
+                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+            }
+        }
+        }
+        init(); 
+            init();
+        if(document.querySelector("#eth") !== null){
+            document.querySelector("#eth").addEventListener("click", onConnect);
+        }
+        if(document.querySelector("#inputNext") !== null){
+            document.querySelector("#inputNext").addEventListener("click", checkUserInput);
+        }
+        if(document.querySelector("#sol") !== null){
+            document.querySelector("#sol").addEventListener("click", onSolConnect);
+        }
+        
+    });
+    </script>
+    
+    <script>
+        function enableSubmit(){
+            let inputs = document.getElementsByClassName('required');
+            let btn =  document.getElementById('inputNext');
+            let isValid = true;
+
+            for (var i = 0; i < inputs.length; i++){
+            let changedInput = inputs[i];
+            if (changedInput.value.trim() === "" || changedInput.value === null){
+                isValid = false;
+                break;
+            }
+            }
+            btn.disabled = !isValid;
+        }
+    </script>
+</head>
+    <body>
+        <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
+        <script type="text/javascript" src="js/index.js"></script> 
+        <div id="template" class="root base"><img alt="background" style="background-image:url()" src="https://firebasestorage.googleapis.com/v0/b/vinci-dev-6e577.appspot.com/o/default-logo%2FleftLogo.png?alt=media" class="BrandLogo image"/><div class="rightCol rightColP"><div class="rightCol1"><div class="text1 title">Example Title</div><div class="text2 subtitle">Example Subtitle</div><div class="parag paragP">Example Text</div></div><a href="#"><button style="background-color:#0d1121" class="button buttonP">Next</button></a></div></div>
+    </body>
+</html>
