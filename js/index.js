@@ -1,6 +1,8 @@
 const VINCI_ENV = sessionStorage.getItem('vinciEnv');
 const BASE_URL = VINCI_ENV === 'dev' ? 'https://us-central1-vinci-dev-6e577.cloudfunctions.net/publicApi/public' :
     'https://us-central1-vinci-prod.cloudfunctions.net/publicApi/public';
+const BASE_API_URL = VINCI_ENV === 'dev' ? 'https://us-central1-vinci-dev-6e577.cloudfunctions.net/api' :
+    'https://us-central1-vinci-prod.cloudfunctions.net/api';
 const PROJECT_ID = ''
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
@@ -145,7 +147,7 @@ async function addUserDecision(event) {
 
 function openPopupD() {
     var allIds = {};
-    var popup = window.open(BASE_URL + '/routes/discord/auth?original='+window.location.href, '', "width=400, height=400");
+    var popup = window.open(BASE_API_URL + '/routes/discord/auth?original='+window.location.href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
         if (popup.location.href !== undefined) {
@@ -179,7 +181,7 @@ function openPopupD() {
 
 function openPopupT() {
     var allIds = {};
-    var popup = window.open(BASE_URL + '/routes/twitter/auth/twitter1?original='+window.location.href, '', "width=400, height=400");
+    var popup = window.open(BASE_API_URL + '/routes/twitter/auth/twitter1?original='+window.location.href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
         if (popup.location.href !== undefined) {
