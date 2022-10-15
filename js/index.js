@@ -1,7 +1,6 @@
-
 const VINCI_ENV = sessionStorage.getItem('vinciEnv');
-const BASE_URL = VINCI_ENV === 'dev' ? 'http://localhost:5001/vinci-dev-6e577/us-central1/api/public' :
-    'https://us-central1-vinci-prod.cloudfunctions.net/api/public';
+const BASE_URL = VINCI_ENV === 'dev' ? 'https://us-central1-vinci-dev-6e577.cloudfunctions.net/publicApi/public' :
+    'https://us-central1-vinci-prod.cloudfunctions.net/publicApi/public';
 const PROJECT_ID = ''
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
@@ -55,8 +54,6 @@ const storeUserWallet = async (selectedWallet) => {
         });
 
     } else {
-
-
         const countryR = await country();
         const userData = { wallet: selectedWallet, id: 'onboarding-user-' + crypto.randomUUID(), country: countryR.country };
         console.log(userData)
@@ -94,10 +91,7 @@ async function checkUserInput() {
             userData: merged,
             API_KEY: 'VINCI_DEV_6E577'
         });
-
     } else {
-
-
         const countryR = await country();
         allIds.country = countryR.country;
         allIds.id = 'onboarding-user-' + crypto.randomUUID();
@@ -130,8 +124,6 @@ async function addUserDecision(event) {
         });
 
     } else {
-
-
         const countryR = await country();
         var user = {}
         user.country = countryR.country;
@@ -147,10 +139,76 @@ async function addUserDecision(event) {
             API_KEY: 'VINCI_DEV_6E577'
         });
     }
-
-
     const data = document.querySelector("#" + event.target.id);
     location.href = data.dataset.href;
+}
+
+function openPopupD() {
+    var allIds = {};
+    var popup = window.open(BASE_URL + '/routes/discord/auth?original='+window.location.href, '', "width=400, height=400");
+
+    var popupTick = setInterval(function () {
+        if (popup.location.href !== undefined) {
+            if (popup.location.href.indexOf('discordU') > -1) {
+                const params = popup.location.href.split("twitterU=")[1]
+                if (window.localStorage.getItem('user') !== null) {
+                    allIds.discordU = params;
+                    let userData = JSON.parse(window.localStorage.getItem('user'));
+                    let merged = { ...userData, ...allIds };
+                    window.localStorage.setItem('user', JSON.stringify(merged));
+                }
+                else {
+                    allIds.twitterU = params;
+                    allIds.id = 'onboarding-user-' + crypto.randomUUID();
+                    window.localStorage.setItem('user', JSON.stringify(allIds));
+                }
+                const elem = document.querySelector("#linkedDiscord");
+                var html = elem.innerHTML;
+                elem.innerHTML = 'Linked ' + params;
+                popup.close();
+                clearInterval(popupTick);
+            }
+        }else{
+            popup.close();
+            clearInterval(popupTick);
+        }
+    }, 1000);
+
+    return false;
+}
+
+function openPopupT() {
+    var allIds = {};
+    var popup = window.open(BASE_URL + '/routes/twitter/auth/twitter1?original='+window.location.href, '', "width=400, height=400");
+
+    var popupTick = setInterval(function () {
+        if (popup.location.href !== undefined) {
+            if (popup.location.href.indexOf('twitterU') > -1) {
+                const params = popup.location.href.split("twitterU=")[1]
+                if (window.localStorage.getItem('user') !== null) {
+                    allIds.twitterU = params;
+                    let userData = JSON.parse(window.localStorage.getItem('user'));
+                    let merged = { ...userData, ...allIds };
+                    window.localStorage.setItem('user', JSON.stringify(merged));
+                }
+                else {
+                    allIds.twitterU = params;
+                    allIds.id = 'onboarding-user-' + crypto.randomUUID();
+                    window.localStorage.setItem('user', JSON.stringify(allIds));
+                }
+                const elem = document.querySelector("#linkedTwitter");
+                var html = elem.innerHTML;
+                elem.innerHTML = 'Linked ' + params;
+                popup.close();
+                clearInterval(popupTick);
+            }
+        }else{
+            popup.close();
+            clearInterval(popupTick);
+        }
+    }, 1000);
+
+    return false;
 }
 
 function init() {
@@ -260,7 +318,9 @@ async function check_user_NFT(user_address, token_address, amount, network_name)
     } else {
     }
 
-    // https://deep-index.moralis.io/api/v2/0xB47E50B7B67971713f80eC7Ec26332f18a7CF738/erc20?chain=eth'     // --header 'X-API-Key: test'     
+    // https://deep-index.moralis.io/api/v2/0xB47E50B7B67971713f80eC7Ec26332f18a7CF738/erc20?chain=eth' \
+    // --header 'X-API-Key: test' \
+    
     const moralisURL = 'https://deep-index.moralis.io/api/v2/' + user_address + '/erc20?chain=' + network_name + '&token_address=' + token_address;
     const result = await axios.get(
         moralisURL,
@@ -296,18 +356,6 @@ async function check_user_NFT(user_address, token_address, amount, network_name)
 
   }
 
-async function check_user_NFT(user_address, token_address, provider_uri) {
-    const opensea_uri = 'https://api.opensea.io/api/v1/assets?owner=' + user_address;
-    const response = await axios.get(opensea_uri);
-    const data = response.data.assets;
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].asset_contract.address === token_address) {
-            return true;
-        }
-    }
-    document.getElementById("error-text").innerHTML = "You don't have the necessary Token";
-    return false;
-}
 
 logPageView();
 init();
@@ -316,4 +364,3 @@ init();
 window.addEventListener('load', async () => {
     init();
 });
-
