@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <script> 
+    window.addEventListener('load', async () => {
+        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discord", "twitter", "linkedTwitter", "linkedDiscord"];
+        var allElements = document.querySelectorAll('*[id]');
+        for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (!ignore.includes(el.id)) {
+            console.log(el.tagName)
+            if (el.id && el.tagName === "BUTTON") {
+                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+            }
+        }
+        }
+        init(); 
+            init();
+        if(document.querySelector("#eth") !== null){
+            document.querySelector("#eth").addEventListener("click", onConnect);
+        }
+        if(document.querySelector("#inputNext") !== null){
+            document.querySelector("#inputNext").addEventListener("click", checkUserInput);
+        }
+        if(document.querySelector("#sol") !== null){
+            document.querySelector("#sol").addEventListener("click", onSolConnect);
+        }
+        if(document.querySelector("#discord") !== null){
+            document.querySelector("#discord").addEventListener("click", openPopupD);
+        }
+        if(document.querySelector("#twitter") !== null){
+            document.querySelector("#twitter").addEventListener("click", openPopupT);
+        }
+        
+    });
+    </script>
+    
+    <script>
+    window.addEventListener('load', async () => {
+        var popupTick = setInterval(function () {
+            let inputs = document.getElementsByClassName('required');
+            let btn =  document.getElementById('inputNext');
+            let isValid = true;
+
+            for (var i = 0; i < inputs.length; i++){
+                let changedInput = inputs[i];
+                if (changedInput.value.trim() === "" || changedInput.value === null){
+                    isValid = false;
+                    break;
+                }
+            }
+            if(document.querySelector("#linkedDiscord") !== null){
+                const elem = document.querySelector("#linkedDiscord");
+                var html = elem.innerHTML;
+                if(html.includes("Linked")){
+                    isValid = true;
+                }else{
+                    isValid = false;
+                }
+            }
+            if(document.querySelector("#linkedTwitter") !== null){
+                const elem = document.querySelector("#linkedTwitter");
+                var html = elem.innerHTML;
+                if(html.includes("Linked")){
+                    isValid = true;
+                }else{
+                    isValid = false;
+                }
+            }
+
+            btn.disabled = !isValid;
+        }, 1000);
+
+    });
+    </script>
+</head>
+    <body>
+        <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
+        <script type="text/javascript" src="js/index.js"></script> 
+        <div id="template" class="TemplatesRootRoot baseTop1 baseTop"><img alt="background" style="background-image:url()" src="https://firebasestorage.googleapis.com/v0/b/vinci-dev-6e577.appspot.com/o/default-logo%2FleftLogo.png?alt=media" class="BrandLogo1 image_ButtonsTemplate"/><div class="FlexColumn col1"><div class="FlexColumn1 col2"><div class="Text1 title">Example Title</div><div class="Paragraph paragP">Example Subtitle</div></div><div class="FlexRow col3"><span class="text textP"><p>Example Subtitle Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  Example Subtitle  </p></span></div><div class="FlexRow1 row2"><a href="screen-e2383ef8-bc88-4079-8479-cb0e8f438d4e.html"><button style="background-color:#0d1121" class="LastWeek4 buttonContent">Back</button></a><a href="#"><button style="background-color:#0d1121" class="LastWeek4 buttonContent">Next</button></a></div></div></div>
+    </body>
+</html>
