@@ -152,7 +152,7 @@ function openPopupD() {
     var popupTick = setInterval(function () {
         if (popup.location.href !== undefined) {
             if (popup.location.href.indexOf('discordU') > -1) {
-                const params = popup.location.href.split("twitterU=")[1]
+                const params = popup.location.href.split("discordU=")[1]
                 if (window.localStorage.getItem('user') !== null) {
                     allIds.discordU = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
@@ -160,7 +160,7 @@ function openPopupD() {
                     window.localStorage.setItem('user', JSON.stringify(merged));
                 }
                 else {
-                    allIds.twitterU = params;
+                    allIds.discordU = params;
                     allIds.id = 'onboarding-user-' + crypto.randomUUID();
                     window.localStorage.setItem('user', JSON.stringify(allIds));
                 }
